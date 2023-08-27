@@ -4,7 +4,9 @@ const mongoose = require("mongoose").default;
 const { PORT, MONGO_URL } = require("./config");
 
 const app = express();
+app.use(express.json());
 
+app.use("/", require("./routes")());
 app.listen(PORT, () => {
   console.log(`Server Running: Port ${PORT}`);
 });
