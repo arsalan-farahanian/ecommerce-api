@@ -9,6 +9,7 @@
   "author": "Arsalan Farahanian",
   "license": "ISC",
   "dependencies": {
+    "bcrypt": "^5.1.1",
     "express": "^4.18.2",
     "mongoose": "^6.12.0"
   },
