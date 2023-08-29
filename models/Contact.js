@@ -4,7 +4,7 @@ const contactSchema = new mongoose.Schema(
   {
     name: String,
     email: String,
-    phone: Number,
+    phone: String,
     typeOfRequest: String,
     message: String,
   },
