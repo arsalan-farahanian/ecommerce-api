@@ -1,7 +1,7 @@
 const router = require("express").Router();
 //controllers
 const { register_post } = require("./controllers/auth");
-const { contactus_post } = require("./controllers/index");
+const { contactus_post } = require("./controllers/miscellaneous");
 
 //validators
 const register_validator = require("./validators/register_validator");
