@@ -59,4 +59,6 @@ productSchema.virtual("price").get(function () {
   return this.basePrice - this.basePrice * (this.discount / 100);
 });
 
+productSchema.set("toJSON", { virtuals: true });
+
 module.exports = mongoose.model("Product", productSchema);
