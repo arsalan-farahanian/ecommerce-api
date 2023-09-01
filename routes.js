@@ -2,7 +2,7 @@ const router = require("express").Router();
 //controllers
 const shopCon = require("./controllers/shop");
 const authCon = require("./controllers/auth");
-const { contactus_post } = require("./controllers/miscellaneous");
+const misCon = require("./controllers/miscellaneous");
 
 //validators
 const register_validator = require("./validators/register_validator");
@@ -17,6 +17,9 @@ module.exports = () => {
   //auth
   router.post("/api/auth/register", register_validator, authCon.register_post);
 
-  router.post("/api/contactus", contactus_validator, contactus_post);
+  //contact us
+  router.get("/api/contact", misCon.contactus_get); // requires admin auth
+  router.post("/api/contact", contactus_validator, misCon.contactus_post);
+
   return router;
 };
