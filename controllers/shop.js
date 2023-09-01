@@ -38,4 +38,15 @@ module.exports = {
       next(err);
     }
   },
+
+  productById_delete: async (req, res, next) => {
+    let productId = req.params.id;
+
+    try {
+      await Product.findByIdAndDelete(productId);
+      res.status(204).json({ msg: "Product was deleted successfully" });
+    } catch (err) {
+      next(err);
+    }
+  },
 };

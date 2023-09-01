@@ -12,6 +12,7 @@ module.exports = () => {
   //products
   router.get("/api/product", shopCon.products_get);
   router.get("/api/product/:id", shopCon.productById_get);
+  router.delete("/api/product/:id", shopCon.productById_delete); //requires AuthZ
 
   //auth
   router.post("/api/auth/register", register_validator, authCon.register_post);
