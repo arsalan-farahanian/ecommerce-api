@@ -49,4 +49,37 @@ module.exports = {
       next(err);
     }
   },
+
+  productReviews_get: async (req, res, next) => {
+    let productId = req.params.id;
+
+    let page = +req.query.page || 1; // getting what page the user is on
+    page = page >= 1 ? page : 1; // preventing explicit negative pages
+
+    let limit = +req.query.limit || 5;
+    limit = limit >= 5 ? limit : 5;
+
+    try {
+      let product = await Product.findById(productId)
+        .select("ratings")
+        .limit(limit)
+        .skip((page - 1) * limit)
+        .populate({
+          path: "ratings",
+          populate: {
+            path: "userId",
+            model: "User",
+            select: "firstname lastname email",
+          },
+        })
+        .exec();
+
+      res.status(200).json({
+        msg: "Reviews were fetched successfully",
+        reviews: product.ratings,
+      });
+    } catch (err) {
+      next(err);
+    }
+  },
 };
