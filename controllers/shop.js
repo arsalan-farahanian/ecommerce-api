@@ -1,3 +1,6 @@
+const mongoose = require("mongoose").default;
+
+// DB models
 const Product = require("../models/Product");
 
 module.exports = {
@@ -79,6 +82,37 @@ module.exports = {
         msg: "Reviews were fetched successfully",
         reviews: product.ratings,
       });
+    } catch (err) {
+      next(err);
+    }
+  },
+
+  productAvgRating_get: async (req, res, next) => {
+    let productId = req.params.id;
+    try {
+      let result = await Product.aggregate([
+        {
+          $match: { _id: mongoose.Types.ObjectId(productId) },
+        },
+        {
+          $unwind: "$ratings",
+        },
+        {
+          $group: {
+            _id: null,
+            averageRating: {
+              $avg: "$ratings.rate",
+            },
+          },
+        },
+      ]).exec();
+      if (result.length > 0) {
+        const averageRating = +result[0].averageRating.toFixed(2);
+        res.status(200).json({
+          msg: "average rating was calculated successfully",
+          averageRating: averageRating,
+        });
+      }
     } catch (err) {
       next(err);
     }
