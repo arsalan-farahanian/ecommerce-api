@@ -10,6 +10,7 @@ module.exports = {
 
     try {
       const products = await Product.find()
+        .select("-ratings")
         .limit(limit)
         .skip((page - 1) * limit)
         .exec();
@@ -29,7 +30,7 @@ module.exports = {
     let productId = req.params.id;
 
     try {
-      let product = await Product.findById(productId);
+      let product = await Product.findById(productId).select("-ratings").exec();
       if (!product) {
         return res.status(404).json({ msg: "Product not found" });
       }
